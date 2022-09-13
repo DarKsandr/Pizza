@@ -1,0 +1,12 @@
+.card-item{
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    grid-column-gap: 20px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.card-item--active {
+    border: 3px green solid;
+    border-radius: 50%;
+}
