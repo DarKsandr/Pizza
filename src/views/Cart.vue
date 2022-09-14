@@ -11,8 +11,11 @@
                                 <div>
                                     <div class="fw-bold">{{item.name}}</div>
                                     <div>
-                                        <div>{{pizzaConstructorData.sizes.find(el => el.code == item.size).name}}, на {{pizzaConstructorData.sauces.find(el => el.code == item.sauce).declinations.on}} тесте</div>
-                                        <div>Соус: {{pizzaConstructorData.sauces.find(el => el.code == item.sauce).name.toLowerCase()}}</div>
+                                        <div>{{pizzaConstructorData.sizes.find(el => el.code == item.size).name}}, на
+                                            {{pizzaConstructorData.sauces.find(el => el.code ==
+                                            item.sauce).declinations.on}} тесте</div>
+                                        <div>Соус: {{pizzaConstructorData.sauces.find(el => el.code ==
+                                        item.sauce).name.toLowerCase()}}</div>
                                         <div>Начинка: {{ingredients_to_string(item.ingredients)}}</div>
                                     </div>
                                 </div>
@@ -28,8 +31,10 @@
                             </div>
                             <div class="col">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-light" @click="editPizza(item)">Изменить</button>
-                                    <button type="button" class="btn btn-danger" @click="deletePizza(index)">Удалить</button>
+                                    <button type="button" class="btn btn-light"
+                                        @click="editPizza(index, item)">Изменить</button>
+                                    <button type="button" class="btn btn-danger"
+                                        @click="deletePizza(index)">Удалить</button>
                                 </div>
                             </div>
                         </div>
@@ -89,16 +94,33 @@
             </div>
             <div class="d-flex gap-4">
                 <h3 class="mb-0">Итого: {{cart.total}} ₽</h3>
-                <button class="btn btn-success" type="submit">Оформить заказ</button>
+                <button class="btn btn-success" type="submit" :disabled="cart.cart.length == 0">Оформить заказ</button>
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h1>Спасибо за заказ</h1>
+                        <div>Мы начали готовить Ваш заказ,</div>
+                        <div v-if="cart.info.receiving_order == 'delivery'">скоро привезём его вам ;)</div>
+                        <div v-else>ожидайте оповещения о готовности ;)</div>
+                        <button type="button" class="btn btn-success mt-3" data-bs-dismiss="modal">Отлично, я жду!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { useCartStore } from '@/store/cart';
 import { usePizzaStore } from '@/store/pizza';
 import pizzaConstructorData from "@/static/pizza.json";
+import { reactive } from 'vue';
 import router from '@/router.js'
 
 const cart = useCartStore();
@@ -109,12 +131,15 @@ const ingredients_to_string = (ingredients) => {
         .filter(item => item.count > 0)
         .map(item => {
             return item.name.toLowerCase();
-        }).join(', '); 
+        }).join(', ');
 }
 
-const editPizza = item => {
-    // pizza.$patch({selected:item});
-    // router.push({name:"home"});
+const editPizza = (index, item) => {
+    // console.log(item.ingredients[0].count)
+    pizza.selected = item;
+    cart.cart.splice(index, 1);
+
+    router.push({name:"home"});
 };
 
 const deletePizza = index => {
@@ -122,7 +147,8 @@ const deletePizza = index => {
 };
 
 const send = () => {
-
+    const modal = new bootstrap.Modal('#orderModal')
+    modal.show();
 };
 </script>
 
