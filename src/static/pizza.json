@@ -35,11 +35,17 @@
   "sauces": [
     {
       "name": "Томатный",
+      "declinations": {
+        "on": "томатном"
+      },
       "code": "tomato",
       "price": 50
     },
     {
       "name": "Сливочный",
+      "declinations": {
+        "on": "сливочном"
+      },
       "code": "creamy",
       "price": 50
     }

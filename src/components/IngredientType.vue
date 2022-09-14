@@ -58,17 +58,6 @@ const pizza = usePizzaStore();
     }
     .btn-count{
         background-color: var(--green);
-        border: none;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         color: white;
-    }
-    .btn-count:disabled{
-        background-color: #d9d9d9;
-        color: grey;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="row g-3">
+    <div class="row g-3 p-3">
         <div class="col-12">
             <h1>Конструктор пиццы</h1>
         </div>
@@ -23,6 +23,3 @@ import SizeType from '@/components/SizeType.vue'
 import IngredientType from '@/components/IngredientType.vue'
 import PizzaType from '@/components/PizzaType.vue'
 </script>
-<style>
-
-</style>

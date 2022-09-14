@@ -14,3 +14,17 @@
     border: 3px var(--green) solid;
     border-radius: 50%;
 }
+
+.btn-count{
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-count:disabled{
+    background-color: #d9d9d9;
+    color: grey;
+}
