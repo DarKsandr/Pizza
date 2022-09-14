@@ -4,11 +4,11 @@
             Выберите размер
         </template>
         <template #body>
-            <div class="d-flex gap-3">
-                <label v-for="item in pizza.size_type.items" :key="item.size" class="card-item size-type">
-                    <input type="radio" :hidden="true" name="size" :value="item.size" v-model="pizza.size_type.active">
-                    <img src="src/assets/img/diameter.svg" alt="size" :class="{'card-item--active': item.size == pizza.size_type.active}">
-                    <div>{{item.size}} см</div>
+            <div class="d-flex flex-wrap gap-3">
+                <label v-for="item in pizzaConstructorData.sizes" :key="item.code" class="card-item size-type">
+                    <input type="radio" :hidden="true" name="size" :value="item.code" v-model="pizza.selected.size">
+                    <img :src="item.image" alt="size" :class="{'card-item--active': item.code == pizza.selected.size}">
+                    <div>{{item.name}}</div>
                 </label>
             </div>
         </template>
@@ -18,6 +18,7 @@
 <script setup>
     import Card from '@/elements/Card.vue';
     import { usePizzaStore } from '@/store/pizza';
+    import pizzaConstructorData from "@/static/pizza.json";
 
     const pizza = usePizzaStore();
 </script>

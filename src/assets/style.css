@@ -1,3 +1,7 @@
+:root{
+    --green: #41B619
+}
+
 .card-item{
     display: grid;
     grid-template-columns: 36px 1fr;
@@ -7,6 +11,6 @@
 }
 
 .card-item--active {
-    border: 3px green solid;
+    border: 3px var(--green) solid;
     border-radius: 50%;
 }

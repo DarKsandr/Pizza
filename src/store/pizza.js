@@ -1,39 +1,37 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue';
+import { defineStore } from "pinia";
+import { ref, reactive, computed } from "vue";
+import pizzaConstructorData from "@/static/pizza.json";
 
-export const usePizzaStore = defineStore('pizza', () => {
+export const usePizzaStore = defineStore("pizza", () => {
+  const selected = reactive({
+    name: "",
+    dough: "light",
+    size: "small",
+    sauce: "tomato",
+    ingredients: pizzaConstructorData.ingredients.map(item => {
+        item.count = 0;
+        return item;
+    }),
+  });
 
-    const dough_type = ref({
-        active: ref("light"),
-        items: ref([{
-                img: "src/assets/img/dough-light.svg",
-                name: "Тонкое",
-                description: "Из твердых сортов пшеницы",
-                type: "light",
-            },
-            {
-                img: "src/assets/img/dough-large.svg",
-                name: "Толстое",
-                description: "Из твердых сортов пшеницы",
-                type: "large",
-            },
-        ]),
-    });
+  const total = computed(() => {
+    const ingredients = selected.ingredients.reduce((previousValue, currentValue, currentIndex, array) => {
+        return previousValue + (currentValue.price * currentValue.count)
+    }, 0);
+    if(ingredients == 0) return 0;
 
-    const size_type = ref({
-        active: ref(23),
-        items: ref([
-            {
-                size: 23,
-            },
-            {
-                size: 32,
-            },
-            {
-                size: 45,
-            },
-        ]),
+    const dough = pizzaConstructorData.dough.find(item => item.code == selected.dough).price;
+    const size = pizzaConstructorData.sizes.find(item => item.code == selected.size).multiplier;
+    const sauce = pizzaConstructorData.sauces.find(item => item.code == selected.sauce).price;
+    
+    return (dough + sauce + ingredients) * size;
+  })
+
+  const ingredientsReset = () => {
+    selected.ingredients.forEach(item => {
+        item.count = 0;
     })
+  }
 
-    return {dough_type, size_type};
+  return { selected, total, ingredientsReset };
 });

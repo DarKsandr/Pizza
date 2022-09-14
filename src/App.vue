@@ -20,7 +20,7 @@
 
 <style>
     header{
-        background-color: #41B619;
+        background-color: var(--green);
         display: flex;
         align-items: center;
         justify-content: space-between;
