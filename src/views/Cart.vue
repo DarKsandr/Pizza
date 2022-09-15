@@ -120,7 +120,6 @@
 import { useCartStore } from '@/store/cart';
 import { usePizzaStore } from '@/store/pizza';
 import pizzaConstructorData from "@/static/pizza.json";
-import { reactive } from 'vue';
 import router from '@/router.js'
 
 const cart = useCartStore();
@@ -128,14 +127,12 @@ const pizza = usePizzaStore();
 
 const ingredients_to_string = (ingredients) => {
     return ingredients
-        .filter(item => item.count > 0)
         .map(item => {
             return item.name.toLowerCase();
         }).join(', ');
 }
 
 const editPizza = (index, item) => {
-    // console.log(item.ingredients[0].count)
     pizza.selected = item;
     cart.cart.splice(index, 1);
 

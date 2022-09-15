@@ -9,28 +9,13 @@
             <img src="/src/assets/img/foundation/small-creamy.svg"  class="pizza-foundation" alt="small-creamy"     v-show="pizza.selected.dough == 'light' && pizza.selected.sauce == 'creamy'">
             <img src="/src/assets/img/foundation/small-tomato.svg"  class="pizza-foundation" alt="small-tomato"     v-show="pizza.selected.dough == 'light' && pizza.selected.sauce == 'tomato'">
         </div>
-        <div class="d-flex gap-3 align-items-center justify-content-end">
-            <h3>Итого: {{pizza.selected.total}} ₽</h3>
-            <button type="button" class="btn btn-success" :disabled="pizza.selected.total == 0 || pizza.selected.name == ''" @click="cart_append">Готовьте!</button>
-        </div>
     </div>
 </template>
 
 <script setup>
     import { usePizzaStore } from '@/store/pizza.js';
-    import { useCartStore } from '@/store/cart.js';
-    import { nextTick } from 'vue';
-    import router from '@/router.js'
 
     const pizza = usePizzaStore();
-    const cart = useCartStore();
-
-    const cart_append = async () => {
-        cart.cart_append(pizza.selected);
-        await nextTick();
-        pizza.allReset();
-        router.push({name:"cart"});
-    }
 </script>
 
 <style scoped>
