@@ -19,7 +19,7 @@ export const useCartStore = defineStore('cart', () => {
     })
 
     const cart_append = (pizza) => {
-        cart.value.push({count: 1, ...pizza.selected, total: pizza.total});
+        cart.value.push(JSON.parse(JSON.stringify({count: 1, ...pizza.selected, total: pizza.total})));
     }
 
     return {total, cart, info, cart_append};

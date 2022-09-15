@@ -16,15 +16,14 @@
             <div>
                 <p>Начинка: </p>
                 <div class="ingredients-container">
-                    <div v-for="item in pizzaConstructorData.ingredients" :key="item.code" class="d-flex">
+                    <div v-for="item in pizza.selected.ingredients" :key="item.code" class="d-flex">
                         <img :src="item.image" :alt="item.code" class="ingredient-image">
                         <div>
                             <div class="fw-bold mb-2">{{item.name}}</div>
-                            <div class="btn-container">
-                                <button class="btn-count" type="button" @click="pizza.ingredientsCountUpdate(item, -1)">-</button>
-                                <div>{{pizza.ingredientsCountGet(item.code)}}</div>
-                                <button class="btn-count" type="button" @click="pizza.ingredientsCountUpdate(item, 1)">+</button>
-                            </div>
+                            <ItemCount 
+                                v-model="item.count"
+                                :min="Number(0)"
+                            />
                         </div>
                     </div>
                 </div>
@@ -37,7 +36,8 @@
 <script setup>
 import Card from '@/elements/Card.vue';
 import { usePizzaStore } from '@/store/pizza.js';
-import pizzaConstructorData from "@/static/pizza.json"; 
+import pizzaConstructorData from "@/static/pizza.json";
+import ItemCount from '@/elements/ItemCounter.vue'; 
 
 const pizza = usePizzaStore();
 </script>

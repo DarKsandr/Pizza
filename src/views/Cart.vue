@@ -21,10 +21,10 @@
                                 </div>
                             </div>
                             <div class="col d-flex align-items-center">
-                                <button type="button" class="btn-count" @click="item.count--"
-                                    :disabled="item.count < 2">-</button>
-                                <div class="fs-4 fw-bold mx-2">{{item.count}}</div>
-                                <button type="button" class="btn-count" @click="item.count++">+</button>
+                                <ItemCount 
+                                    v-model="item.count"
+                                    :min="Number(1)"
+                                />
                             </div>
                             <div class="col fw-bold fs-4">
                                 {{item.total * item.count}} ₽
@@ -121,15 +121,15 @@ import { useCartStore } from '@/store/cart';
 import { usePizzaStore } from '@/store/pizza';
 import pizzaConstructorData from "@/static/pizza.json";
 import router from '@/router.js'
+import ItemCount from '@/elements/ItemCounter.vue'
 
 const cart = useCartStore();
 const pizza = usePizzaStore();
 
 const ingredients_to_string = (ingredients) => {
     return ingredients
-        .map(item => {
-            return item.name.toLowerCase();
-        }).join(', ');
+        .filter(item => item.count > 0)
+        .map(item => item.name.toLowerCase()).join(', ');
 }
 
 const editPizza = (index, item) => {
